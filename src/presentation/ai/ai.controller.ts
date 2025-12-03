@@ -16,6 +16,8 @@ import { Request, Response } from "express";
 import { AskRequest, SimpleContentRequest } from "./schemas";
 import { ApiResponse } from "../../domain/interfaces";
 import { GeminiResponse, GeminiService } from "../../services/gemini.service";
+import { CustomError } from "../../domain/errors/CustomError";
+import { handleError } from "../../lib/errorHandler";
 
 // Tipos específicos para las respuestas de AI
 interface AskResponseData {
@@ -71,16 +73,17 @@ export class AIController {
         } catch (error) {
             console.error('Error en AIController.ask:', error);
 
+            const { statusCode, message } = handleError(error);
+
             const response_: ApiResponse = {
-                statusCode: 500,
+                statusCode,
                 success: false,
-                message: 'Error al procesar la solicitud de AI'
+                message
             };
 
-            res.status(500).json(response_);
-        }
-    };
-
+            res.status(statusCode).json(response_);
+        };
+    }
     /**
      * POST /api/ai/simple
      * Endpoint simplificado para obtener respuestas de texto
