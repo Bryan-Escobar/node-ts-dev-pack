@@ -27,7 +27,7 @@ const recomendarLibroFunctionDeclaration = {
 };
 
 export class AIController {
-    static ask = async (req: Request, res: Response) => {
+    public ask = async (req: Request, res: Response) => {
         const prompt = req.body.prompt;
         const ai = new GoogleGenAI({ apiKey: envs.GEMINI_API_KEY });
 
