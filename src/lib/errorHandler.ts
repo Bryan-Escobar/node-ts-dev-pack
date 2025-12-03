@@ -10,14 +10,6 @@ export const handleError = (error: any): ErrorHandlerInterface => {
   if (error instanceof CustomError) {
     statusCode = error.statusCode;
     message = error.message;
-    console.log("Error manejado:", message);
   }
-
-  console.error("Error manejado:", {
-    statusCode,
-    message,
-    originalError: error,
-  });
-
   return { statusCode, message };
 };
