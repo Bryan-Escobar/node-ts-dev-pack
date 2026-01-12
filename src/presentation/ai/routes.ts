@@ -15,13 +15,6 @@ export class AiRoutes {
     static get routes(): Router {
         const router = Router();
         const aiController = new AIController();
-
-        /**
-         * GET /api/ai/health
-         * Health check del servicio de AI
-         */
-        router.get("/health", aiController.health);
-
         /**
          * POST /api/ai/ask
          * Endpoint principal con function calling habilitado
@@ -31,17 +24,6 @@ export class AiRoutes {
             "/ask",
             validateBody(AskRequestSchema),
             aiController.ask
-        );
-
-        /**
-         * POST /api/ai/simple
-         * Endpoint simplificado sin function calling
-         * Body: { prompt: string }
-         */
-        router.post(
-            "/simple",
-            validateBody(SimpleContentRequestSchema),
-            aiController.simple
         );
 
         return router;
